@@ -46,4 +46,10 @@ RUN conda install -y bowtie=1.2.1.1
 ENV PATH /opt/sgains/tools:$PATH
 ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
 
+RUN apt-get install -y gfortran
 
+RUN cd /opt/sgains/scripts && Rscript setup.R
+
+VOLUME /data
+
+WORKDIR /data
