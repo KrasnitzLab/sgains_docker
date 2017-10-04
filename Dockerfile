@@ -31,4 +31,19 @@ RUN conda install -y r-essentials
 
 RUN conda install pandas numpy
 
+RUN apt-get install -y build-essential
+
+RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
+
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta2.tar.gz -O ~/sgains.tar.gz && \
+    mkdir /opt/sgains && \
+    tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
+
+
+RUN conda install -y -c conda-forge perl=5.22.0
+RUN conda install -y bowtie=1.2.1.1
+
+ENV PATH /opt/sgains/tools:$PATH
+ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
+
 
