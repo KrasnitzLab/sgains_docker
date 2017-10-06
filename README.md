@@ -5,5 +5,6 @@
 ## Example usage
 
 ```
-docker run -i -v /full/pathname:/data -t sgains_docker /bin/bash
+docker pull krasnitzlab/sgains
+docker run -i -v /full/pathname:/data -t krasnitzlab/sgains /bin/bash
 ```
