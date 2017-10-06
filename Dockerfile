@@ -8,6 +8,9 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion
+RUN apt-get install -y gfortran
+RUN apt-get install -y build-essential
+
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/archive/Anaconda3-5.0.0-Linux-x86_64.sh -O ~/anaconda.sh && \
@@ -31,7 +34,8 @@ RUN conda install -y r-essentials
 
 RUN conda install pandas numpy
 
-RUN apt-get install -y build-essential
+RUN conda install -y -c conda-forge perl=5.22.0
+RUN conda install -y bowtie=1.2.1.1
 
 RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
 
@@ -39,17 +43,10 @@ RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta2.tar.gz 
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
-
-RUN conda install -y -c conda-forge perl=5.22.0
-RUN conda install -y bowtie=1.2.1.1
-
 ENV PATH /opt/sgains/tools:$PATH
 ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
-
-RUN apt-get install -y gfortran
 
 RUN cd /opt/sgains/scripts && Rscript setup.R
 
 VOLUME /data
-
 WORKDIR /data
