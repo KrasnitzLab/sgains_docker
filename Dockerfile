@@ -50,3 +50,5 @@ RUN cd /opt/sgains/scripts && Rscript setup.R
 
 VOLUME /data
 WORKDIR /data
+
+CMD ["/bin/bash"]

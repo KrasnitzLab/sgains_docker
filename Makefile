@@ -2,4 +2,4 @@
 all:
 
 image:
-	docker build -t sgains_docker .
+	docker build -t krasnitzlab/sgains .
