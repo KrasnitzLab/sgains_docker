@@ -39,7 +39,7 @@ RUN conda install -y bowtie=1.2.1.1
 
 RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
 
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta3.tar.gz -O ~/sgains.tar.gz && \
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta4.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
