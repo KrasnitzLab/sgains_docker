@@ -37,6 +37,9 @@ RUN conda install pandas numpy
 RUN conda install -y -c conda-forge perl=5.22.0
 RUN conda install -y bowtie=1.2.1.1
 
+RUN conda install -y -c bioconda bioconductor-dnacopy 
+RUN conda install -y r-fdrtool parallel r-signal
+
 RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
 
 RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta5.tar.gz -O ~/sgains.tar.gz && \
