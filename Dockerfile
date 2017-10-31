@@ -3,17 +3,20 @@ FROM ubuntu:16.04
 MAINTAINER Lubomir Chorbadjiev <lubomir.chorbadjiev@gmail.com>
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
+
+RUN apt-get update --fix-missing 
+RUN apt-get install -y wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion
-RUN apt-get install -y gfortran
-RUN apt-get install -y build-essential
+
+# RUN apt-get install -y build-essential
+# RUN apt-get install -y gfortran
 
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/archive/Anaconda3-5.0.0-Linux-x86_64.sh -O ~/anaconda.sh && \
+    wget --quiet https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
     rm ~/anaconda.sh
 
@@ -25,26 +28,24 @@ RUN apt-get install -y curl grep sed dpkg && \
     apt-get clean
 
 ENV PATH /opt/conda/bin:$PATH
+RUN apt-get install -y build-essential gfortran
 
-RUN conda config --add channels bioconda
-RUN conda install -y samtools bcftools biopython pysam
+# RUN conda install -y pandas libgcc-ng libgfortran-ng
+# RUN conda config --add channels bioconda
+# RUN conda install -y samtools bcftools biopython pysam
+# RUN conda config --add channels r
+# RUN conda install -y r-essentials
+# RUN pip install python-box termcolor PyYAML pytest pytest-asyncio # setproctitle
+# RUN conda install -y -c conda-forge perl=5.22.0
+# RUN conda install -y bowtie=1.2.1.1
 
-RUN conda config --add channels r
-RUN conda install -y r-essentials
+COPY conda-environment.yml /conda-environment.yml
+RUN conda env update -f /conda-environment.yml
 
-RUN conda install pandas numpy
-
-RUN conda install -y -c conda-forge perl=5.22.0
-RUN conda install -y bowtie=1.2.1.1
-
-RUN conda install -y -c bioconda bioconductor-dnacopy 
-RUN conda install -y r-fdrtool parallel r-signal
-
-RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
-
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta5.tar.gz -O ~/sgains.tar.gz && \
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta7.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
+
 
 ENV PATH /opt/sgains/tools:$PATH
 ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
