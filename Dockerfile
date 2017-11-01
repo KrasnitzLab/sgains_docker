@@ -42,7 +42,7 @@ RUN apt-get install -y build-essential gfortran
 COPY conda-environment.yml /conda-environment.yml
 RUN conda env update -f /conda-environment.yml
 
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta7.tar.gz -O ~/sgains.tar.gz && \
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta8.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
