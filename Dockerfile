@@ -35,10 +35,7 @@ RUN conda install -y pandas
 RUN conda config --add channels bioconda
 RUN conda install -y samtools bcftools biopython pysam
 
-RUN conda install -y -c conda-forge perl=5.22.0
-RUN conda install -y bowtie=1.2.1.1
-
-RUN pip install python-box termcolor PyYAML pytest pytest-asyncio # setproctitle
+RUN pip install python-box termcolor PyYAML pytest pytest-asyncio setproctitle
 
 # RUN conda config --add channels r
 # RUN conda install -y r-essentials
@@ -104,6 +101,20 @@ ENV PATH /opt/sgains/tools:$PATH
 ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
 
 RUN cd /opt/sgains/scripts && Rscript setup.R
+
+# RUN conda install -y -c conda-forge perl=5.22.0
+# RUN conda install -y bowtie=1.2.1.1
+
+RUN wget --quiet https://sourceforge.net/projects/bowtie-bio/files/bowtie/0.12.7/bowtie-0.12.7-src.zip/download -O ~/bowtie-0.12.7-src.zip && \
+    cd /opt && \
+    unzip ~/bowtie-0.12.7-src.zip && \
+    cd /opt/bowtie-0.12.7 && \
+    sed -i "18s/.*/EXTRA_CFLAGS = -fpermissive/" Makefile && \
+    sed -i "19s/.*/EXTRA_CXXFLAGS = -fpermissive/" Makefile && \
+    make
+
+ENV PATH /opt/bowtie-0.12.7/:$PATH
+
 
 VOLUME /data
 WORKDIR /data
