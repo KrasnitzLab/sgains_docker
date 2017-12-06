@@ -95,7 +95,7 @@ RUN apt-get update \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta8.tar.gz -O ~/sgains.tar.gz && \
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta9.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
