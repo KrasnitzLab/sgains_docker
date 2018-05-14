@@ -60,6 +60,10 @@ RUN apt-get update \
         ca-certificates \
         apt-transport-https \
         gsfonts \
+        curl \
+        openssl \
+        libssl-dev \
+        libcurl4-openssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 ## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
@@ -80,8 +84,8 @@ ENV R_BASE_VERSION 3.3.3
 ## Also set a default CRAN repo, and make sure littler knows about it too
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        littler\
-                r-cran-littler \
+        littler \
+        r-cran-littler \
         r-base=${R_BASE_VERSION}* \
         r-base-dev=${R_BASE_VERSION}* \
         r-recommended=${R_BASE_VERSION}* \
@@ -95,13 +99,17 @@ RUN apt-get update \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0_beta9.tar.gz -O ~/sgains.tar.gz && \
+
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0.0RC1.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
 
 ENV PATH /opt/sgains/tools:$PATH
 ENV PYTHONPATH /opt/sgains/scpipe:$PYTHONPATH
+
+COPY install.R /install.R
+RUN Rscript /install.R
 
 RUN cd /opt/sgains/scripts && Rscript setup.R
 
