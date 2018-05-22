@@ -100,7 +100,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0.0RC3.tar.gz -O ~/sgains.tar.gz && \
+RUN wget --quiet https://github.com/KrasnitzLab/sgains/archive/1.0.0RC4.tar.gz -O ~/sgains.tar.gz && \
     mkdir /opt/sgains && \
     tar zxf ~/sgains.tar.gz -C /opt/sgains --strip-components 1
 
